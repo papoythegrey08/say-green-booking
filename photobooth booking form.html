@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Say Green | Photobooth Booking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-top: #0f2318;
+    --bg-bottom: #081410;
+    --card: #142c1f;
+    --card-border: rgba(255,255,255,0.07);
+    --input-bg: #0c1e14;
+    --input-border: rgba(255,255,255,0.09);
+    --text: #f2f6f3;
+    --muted: #8fae9c;
+    --muted-2: #6e8b7a;
+    --green-bright: #6fcb80;
+    --green-glow: rgba(111,203,128,0.35);
+    --number-bg: rgba(111,203,128,0.14);
+    --number-border: rgba(111,203,128,0.4);
+    --number-text: #bdeac2;
+    --required: #ef6f9e;
+    --error: #e8836f;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    color:var(--text);
+    font-family:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    padding:28px 16px 48px;
+  }
+
+  .header{
+    text-align:center;
+    max-width:420px;
+    margin:0 auto 26px;
+  }
+  .logo-badge{
+    width:96px;
+    height:96px;
+    border-radius:50%;
+    margin:0 auto 16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:radial-gradient(circle at 35% 30%, rgba(111,203,128,0.18), rgba(111,203,128,0.02));
+    border:1.5px solid var(--green-glow);
+    box-shadow:0 0 26px var(--green-glow);
+  }
+  .logo-badge span{
+    font-family:'Dancing Script', cursive;
+    font-size:34px;
+    font-weight:700;
+    color:var(--green-bright);
+  }
+  .header h1{
+    font-size:22px;
+    font-weight:700;
+    margin:0 0 8px;
+    color:var(--text);
+  }
+  .header p{
+    margin:0;
+    font-size:14px;
+    line-height:1.55;
+    color:var(--muted);
+  }
+
+  .form-wrap{
+    max-width:420px;
+    margin:0 auto;
+  }
+
+  .section{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:18px;
+    padding:20px 18px;
+    margin-bottom:18px;
+  }
+  .section-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding-bottom:14px;
+    margin-bottom:16px;
+    border-bottom:1px solid rgba(255,255,255,0.07);
+  }
+  .step-num{
+    flex-shrink:0;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:var(--number-bg);
+    border:1px solid var(--number-border);
+    color:var(--number-text);
+    font-size:13px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .section-head h2{
+    font-size:16px;
+    margin:0 0 2px;
+    color:var(--text);
+  }
+  .section-head p{
+    font-size:12.5px;
+    margin:0;
+    color:var(--muted-2);
+  }
+
+  .field{margin-bottom:16px;}
+  .field:last-child{margin-bottom:0;}
+  label{
+    display:block;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--text);
+    margin-bottom:7px;
+  }
+  label .req{color:var(--required);margin-left:2px;}
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="datetime-local"],
+  select,
+  textarea{
+    width:100%;
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    padding:12px 13px;
+    border:1px solid var(--input-border);
+    border-radius:10px;
+    background:var(--input-bg);
+    color:var(--text);
+  }
+  textarea{resize:vertical;min-height:88px;line-height:1.45;}
+  ::placeholder{color:var(--muted-2);}
+  select{-webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238fae9c' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    padding-right:36px;
+  }
+  input[type="datetime-local"]{color-scheme:dark;}
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible{
+    outline:2px solid var(--green-bright);
+    outline-offset:1px;
+  }
+
+  .note{
+    font-size:12px;
+    color:var(--muted-2);
+    margin-top:10px;
+    line-height:1.5;
+  }
+
+  .submit-btn{
+    width:100%;
+    max-width:420px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    padding:15px;
+    margin:6px auto 0;
+    background:var(--green-bright);
+    color:#0c1e14;
+    border:none;
+    border-radius:14px;
+    font-family:'Inter', sans-serif;
+    font-size:15.5px;
+    font-weight:700;
+    transition:filter 0.15s ease, transform 0.1s ease;
+  }
+  .submit-btn:hover{filter:brightness(1.06);}
+  .submit-btn:active{transform:scale(0.99);}
+  .submit-btn:disabled{opacity:0.6;}
+  .submit-btn:focus-visible{outline:2px solid var(--text);outline-offset:2px;}
+  .submit-btn svg{flex-shrink:0;}
+
+  @media (prefers-reduced-motion: reduce){
+    .submit-btn{transition:none;}
+  }
+
+  .form-message{
+    display:none;
+    max-width:420px;
+    margin:14px auto 0;
+    padding:12px 14px;
+    border-radius:10px;
+    font-size:13.5px;
+    line-height:1.5;
+    text-align:center;
+  }
+  .form-message.success{
+    display:block;
+    background:rgba(111,203,128,0.14);
+    color:#bdeac2;
+    border:1px solid rgba(111,203,128,0.35);
+  }
+  .form-message.error{
+    display:block;
+    background:rgba(232,131,111,0.14);
+    color:#f3b3a4;
+    border:1px solid rgba(232,131,111,0.35);
+  }
+
+  .footnote{
+    max-width:420px;
+    margin:16px auto 4px;
+    text-align:center;
+    font-size:12.5px;
+    color:var(--muted-2);
+    line-height:1.6;
+  }
+  .copyright{
+    max-width:420px;
+    margin:2px auto 0;
+    text-align:center;
+    font-size:11.5px;
+    color:#4d6a58;
+  }
+
+  .botcheck-wrap{position:absolute;left:-9999px;top:-9999px;}
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo-badge"><span>SG</span></div>
+    <h1>Say Green | Photobooth</h1>
+    <p>Fill out the form below to request a photobooth booking for your event.</p>
+  </div>
+
+  <div class="form-wrap">
+    <form id="bookingForm">
+
+      <input type="checkbox" name="botcheck" class="botcheck-wrap" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY_HERE">
+      <input type="hidden" name="subject" value="New Photobooth Booking Request — Say Green">
+
+      <div class="section">
+        <div class="section-head">
+          <div class="step-num">1</div>
+          <div>
+            <h2>Your Details</h2>
+            <p>Contact information</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="fullName">Full Name<span class="req">*</span></label>
+          <input type="text" id="fullName" name="Full Name" required placeholder="Your full name">
+        </div>
+        <div class="field">
+          <label for="email">Email Address<span class="req">*</span></label>
+          <input type="email" id="email" name="Email" required placeholder="you@email.com">
+        </div>
+        <div class="field">
+          <label for="phone">Phone Number<span class="req">*</span></label>
+          <input type="tel" id="phone" name="Phone" required placeholder="e.g. 09xxxxxxxxx">
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="step-num">2</div>
+          <div>
+            <h2>Event Information</h2>
+            <p>Tell us about your event</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="eventType">Event Type<span class="req">*</span></label>
+          <input type="text" id="eventType" name="Event Type" required placeholder="Wedding, Birthday, Corporate...">
+        </div>
+        <div class="field">
+          <label for="eventDateTime">Date &amp; Time<span class="req">*</span></label>
+          <input type="datetime-local" id="eventDateTime" name="Event Date and Time" required>
+        </div>
+        <div class="field">
+          <label for="package">Select Package<span class="req">*</span></label>
+          <select id="package" name="Package" required>
+            <option value="" selected disabled>Choose a package...</option>
+            <option>Basic Package (2 Hours)</option>
+            <option>Standard Package (3 Hours)</option>
+            <option>Premium Package (4 Hours)</option>
+            <option>Custom Package</option>
+          </select>
+        </div>
+        <p class="note">* Final price may vary with transportation fees. Our team will confirm the total.</p>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="step-num">3</div>
+          <div>
+            <h2>Location &amp; Notes</h2>
+            <p>Where and any special requests</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="venueName">Venue Name<span class="req">*</span></label>
+          <input type="text" id="venueName" name="Venue Name" required placeholder="e.g. Grand Ballroom, SMX Convention">
+        </div>
+        <div class="field">
+          <label for="venueAddress">Venue Address or Google Maps Link</label>
+          <input type="text" id="venueAddress" name="Venue Address" placeholder="Full address or paste a Google Maps link">
+        </div>
+        <div class="field">
+          <label for="notes">Additional Notes or Requests</label>
+          <textarea id="notes" name="Additional Notes" placeholder="Any special requests, themes, or notes for us..."></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Submit Booking Request
+      </button>
+
+      <div id="formMessage" class="form-message"></div>
+    </form>
+
+    <p class="footnote">We'll review your request and get back to you within 24 hours.</p>
+    <p class="copyright">Say Green | Photobooth © <span id="yearNow"></span></p>
+  </div>
+
+<script>
+document.getElementById('yearNow').textContent = new Date().getFullYear();
+
+const form = document.getElementById('bookingForm');
+const submitBtn = document.getElementById('submitBtn');
+const messageBox = document.getElementById('formMessage');
+const btnLabel = submitBtn.lastChild;
+
+form.addEventListener('submit', async function(e){
+  e.preventDefault();
+
+  submitBtn.disabled = true;
+  const originalLabel = btnLabel.textContent;
+  btnLabel.textContent = ' Sending...';
+  messageBox.className = 'form-message';
+  messageBox.style.display = 'none';
+
+  try {
+    const formData = new FormData(form);
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    });
+    const result = await response.json();
+
+    if(result.success){
+      form.reset();
+      messageBox.className = 'form-message success';
+      messageBox.textContent = "Thanks — your booking request is in. We'll get back to you within 24 hours.";
+    } else {
+      messageBox.className = 'form-message error';
+      messageBox.textContent = "Something went wrong sending this. Please try again in a moment.";
+    }
+  } catch(err){
+    messageBox.className = 'form-message error';
+    messageBox.textContent = "Something went wrong sending this. Please check your connection and try again.";
+  }
+
+  messageBox.style.display = 'block';
+  submitBtn.disabled = false;
+  btnLabel.textContent = originalLabel;
+});
+</script>
+
+</body>
+</html>
